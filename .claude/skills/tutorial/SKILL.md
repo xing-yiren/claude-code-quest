@@ -1,5 +1,5 @@
 ---
-description: "Interactive tutorial game for learning Claude Code — from basic usage to source architecture. 20 levels across 3 phases."
+description: "Interactive tutorial game for learning Claude Code — from basic usage to source architecture. 23 levels across 3 phases + 1 bonus."
 allowed-tools: [Read, Write, Glob, Bash, Grep]
 user-invocable: true
 ---
@@ -61,6 +61,8 @@ type: usage      # "usage" or "source"
 - `Bash` to run verification commands
 - For actions that leave no trace (e.g., `/help`, `/clear`), verify by asking the user what they learned and evaluating their answer against what you know to be true
 
+> **实操优先原则**: Usage 关卡讲完概念后直接让用户动手。如果用户不具备实操条件（如没有 API key），有 `skippable: true` 的关卡可以用 `/tutorial skip` 跳过，不需要问答兜底。
+
 **Source levels** (`type: source`): Teach Claude Code architecture. The user reads code excerpts (included in the level file) and answers questions. You evaluate answers based on the expected concepts listed in the level file.
 
 ---
@@ -80,6 +82,8 @@ Read .claude/tutorial/progress.json
 Check if the user passed any arguments:
 
 - `/tutorial hint` → Read the current level file, extract and display the hint section. Do NOT mark as completed.
+- `/tutorial go [n]` → Parse the level number n, validate that the level file exists, update currentLevel to n in progress.json, then load and display that level. Does NOT modify completedLevels — user keeps their history.
+- `/tutorial skip` → If the current level file has `skippable: true` in frontmatter, increment currentLevel and confirm skip. If not skippable, tell the user this level can't be skipped.
 - `/tutorial reset` → Ask for confirmation ("这将清除所有进度，确定吗？"). If confirmed, delete progress.json with Bash. Confirm reset.
 - `/tutorial list` → Read all level files (or use Glob to list them), display a table with completion status.
 - `/tutorial` (no args) → Continue to Step 3.
@@ -97,7 +101,7 @@ Show the level to the user in a clean format:
 ```
 ┌────────────────────────────────────────────┐
 │  Claude Code Quest                          │
-│  进度: Level {n}/20  ({completedLevels.length} 已完成)  │
+│  进度: Level {n}/23  ({completedLevels.length} 已完成)  │
 ├────────────────────────────────────────────┤
 │  📖 {title}                                │
 │  阶段 {phase} · 难度 {'★'.repeat(difficulty)} · {type === 'usage' ? '实操' : '源码'} │
@@ -146,6 +150,8 @@ Each source level lists `期望答案` (expected concepts). The user doesn't nee
 
 For example, if the expected answer is "AutoCompact, 13,000 token buffer" and the user says "自动压缩，大约 13000 token 的缓冲区", that's a pass.
 
+> **验证原则**: 常规概念（模型区别、文件操作等）靠自身知识判断即可，大意对了就过关。对于版本特有细节或不确定的信息，先查文档或运行时行为再判断，不强行下结论。
+
 ---
 
 ## Commands Summary
@@ -153,7 +159,9 @@ For example, if the expected answer is "AutoCompact, 13,000 token buffer" and th
 | Command | Action |
 |---------|--------|
 | `/tutorial` | Continue current level or show progress |
+| `/tutorial go [n]` | Jump to level n (keeps completion history) |
 | `/tutorial hint` | Show hint for current level |
+| `/tutorial skip` | Skip current level (only if marked `skippable`) |
 | `/tutorial reset` | Reset all progress (with confirmation) |
 | `/tutorial list` | Show all levels with completion status |
 
