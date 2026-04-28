@@ -1,5 +1,5 @@
 ---
-id: 21
+id: 22
 title: 终端 UI
 phase: 3
 difficulty: 2

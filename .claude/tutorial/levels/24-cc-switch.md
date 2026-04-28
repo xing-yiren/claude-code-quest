@@ -1,5 +1,5 @@
 ---
-id: 23
+id: 24
 title: cc-switch：多配置管理
 phase: bonus
 difficulty: 3

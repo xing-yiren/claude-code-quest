@@ -1,5 +1,5 @@
 ---
-id: 22
+id: 23
 title: 创建自己的 Skill
 phase: 3
 difficulty: 3

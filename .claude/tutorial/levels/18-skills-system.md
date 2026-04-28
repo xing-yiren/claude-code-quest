@@ -1,5 +1,5 @@
 ---
-id: 17
+id: 18
 title: 技能系统
 phase: 2
 difficulty: 2

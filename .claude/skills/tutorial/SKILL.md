@@ -1,5 +1,5 @@
 ---
-description: "Interactive tutorial game for learning Claude Code — from basic usage to source architecture. 23 levels across 3 phases + 1 bonus."
+description: "Interactive tutorial game for learning Claude Code — from basic usage to source architecture. 24 levels across 3 phases + 1 bonus."
 allowed-tools: [Read, Write, Glob, Bash, Grep]
 user-invocable: true
 ---
@@ -101,7 +101,7 @@ Show the level to the user in a clean format:
 ```
 ┌────────────────────────────────────────────┐
 │  Claude Code Quest                          │
-│  进度: Level {n}/23  ({completedLevels.length} 已完成)  │
+│  进度: Level {n}/24  ({completedLevels.length} 已完成)  │
 ├────────────────────────────────────────────┤
 │  📖 {title}                                │
 │  阶段 {phase} · 难度 {'★'.repeat(difficulty)} · {type === 'usage' ? '实操' : '源码'} │
