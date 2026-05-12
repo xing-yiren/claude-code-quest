@@ -4,80 +4,73 @@ An interactive, game-like tutorial for learning Claude Code — from basic usage
 
 ## How It Works
 
-This is a **Claude Code file skill**. No plugins, no source-code modifications, no extra installs. Just drop the `.claude/` folder into your project and type `/tutorial` in Claude Code.
+This is a **Claude Code file skill**. No plugins, no modifications, no extra installs. Just drop the `.claude/` folder into your project and type `/tutorial` in Claude Code.
 
-```
-User: /tutorial
-Claude: ┌──────────────────────────────────────┐
-        │  Claude Code Quest                   │
-        │  进度: Level 6/24  (5 已完成)         │
-        │                                      │
-        │  📖 会话恢复与回退                    │
-        │  阶段 1 · 难度 ★★ · 实操             │
-        │                                      │
-        │  学会恢复之前的会话，并在需要时回退   │
-        │  到较早的对话节点重新尝试...          │
-        └──────────────────────────────────────┘
+```text
+User: /tutorial list
+Claude:
+Progress: 5/24 completed · Current: Level 5
+
+Phase 1 — Basics
+[DONE]    01 欢迎与基本交互
+[DONE]    02 斜杠命令入门
+[CURRENT] 05 自定义模型配置
+[TODO]    06 会话恢复与回退
 ```
 
 ## 24 Levels, 3 Phases + 1 Bonus
 
-| Phase | Levels | Focus |
+| Phase | Levels | Topic |
 |-------|--------|-------|
-| 1 — Usage | 1–12 | Learn Claude Code through guided hands-on tasks |
-| 2 — Source | 13–17 | Understand Claude Code architecture from the source |
-| 3 — Deep Dive | 18–23 | Explore advanced systems and build your own skill |
-| Bonus | 24 | Learn an adjacent third-party workflow tool |
+| 1 — Basics | 1–13 | Learn Claude Code usage: slash commands, file ops, model switching, custom model, session recovery, CLAUDE.md, skills, plan mode, MCP, subagents, agent teams, context management |
+| 2 — Architecture | 14–18 | Understand the design: QueryEngine, tool system, coordinator-worker, context compression, skills system |
+| 3 — Deep Dive | 19–23 | Master the internals: security model, memory system, task system, terminal UI, build-your-skill |
+| Bonus | 24 | cc-switch multi-config management |
 
-## Learning Philosophy
+## Tutorial Commands
 
-Claude Code Quest is designed to progress in three steps:
+The tutorial skill behaves like a small CLI with these supported forms:
 
-1. **Learn the basics** — slash commands, files, models, memory, planning
-2. **Practice real workflows** — session recovery, custom model config, subagents, agent teams
-3. **Understand the internals** — context, tools, security, memory, tasks, UI, and skills
+- `/tutorial`
+- `/tutorial exit`
+- `/tutorial hint`
+- `/tutorial go <level>`
+- `/tutorial skip`
+- `/tutorial reset`
+- `/tutorial list`
 
-As the tutorial goes on, levels become more **project-based**. Instead of abstract Q&A, later levels are designed around small practical outcomes so you learn each feature by using it in a realistic workflow.
+Examples:
 
-## Highlights
+```text
+/tutorial
+/tutorial exit
+/tutorial go 14
+/tutorial hint
+/tutorial list
+```
 
-- **Guided usage lessons** for Claude Code fundamentals
-- **Hands-on workflow levels** like session recovery, subagent task delegation, and agent teams
-- **Source-reading phases** for understanding how Claude Code works internally
-- **Build-your-own-skill finale** as a concrete final project
-- **Zero-invasion design** — implemented entirely as a file skill
+`/tutorial` enters tutorial mode or continues the saved level. `/tutorial exit` pauses tutorial mode and saves progress so you can return later with `/tutorial`.
+
+`/tutorial go <level>` accepts exactly one numeric target level. Forms like `/tutorial go`, `/tutorial go level 5`, or `/tutorial list now` are invalid and should be rejected with a brief usage hint.
 
 ## Quick Start
 
 ```bash
 # In your project directory
-git clone https://github.com/xing-yiren/claude-code-quest.git .quest-tmp
+git clone https://github.com/YOUR_USERNAME/claude-code-quest.git .quest-tmp
 cp -r .quest-tmp/.claude .
 rm -rf .quest-tmp
 
-# Start Claude Code and type:
+# Start Claude Code and try:
 #   /tutorial
+#   /tutorial list
+#   /tutorial go 5
 ```
 
 ## Requirements
 
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) installed
 - A Claude Code-compatible project directory
-
-## Repository Structure
-
-```text
-.claude/
-├── skills/
-│   └── tutorial/
-│       └── SKILL.md              # Tutorial game engine
-└── tutorial/
-    ├── progress.json             # Player progress (created at runtime)
-    └── levels/
-        ├── 01-welcome.md
-        ├── ...
-        └── 24-cc-switch.md
-```
 
 ## License
 
