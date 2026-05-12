@@ -124,18 +124,17 @@ Read .claude/tutorial/levels/{currentLevel padded to 2 digits}-*.md
 ```
 
 ### Step 4: Display Level
-Show the level to the user in a clean format:
+Show the level to the user in a clean, terminal-safe plain-text format. Avoid box-drawing characters or emoji that may render as mojibake in some terminals.
 
-```
-┌────────────────────────────────────────────┐
-│  Claude Code Quest                          │
-│  进度: Level {n}/24  ({completedLevels.length} 已完成)  │
-├────────────────────────────────────────────┤
-│  📖 {title}                                │
-│  阶段 {phase} · 难度 {'★'.repeat(difficulty)} · {type === 'usage' ? '实操' : '源码'} │
-│                                            │
-│  {description/goal}                        │
-└────────────────────────────────────────────┘
+Recommended format:
+
+```text
+Claude Code Quest
+Level {n}/24 · {completedLevels.length} completed
+{title}
+Phase {phase} · Difficulty {'★'.repeat(difficulty)} · {type === 'usage' ? 'Usage' : 'Source'}
+
+{description/goal}
 ```
 
 ### Step 5: Guide User
@@ -178,7 +177,7 @@ When verifying Level 6:
 3. Check that a transcript contains a `custom-title` entry with `customTitle: "ccq-l6-after-clear"`.
 4. Confirm those two titles belong to different `sessionId` values or different transcript files. This verifies that `/clear` or `/new` created a new session rather than overwriting the old one.
 5. Check that the `ccq-l6-before-clear` transcript later contains the user message `我已恢复到 ccq-l6-before-clear`. This verifies that the user resumed the earlier session and continued there.
-6. For UI-only actions inside the `/resume` picker — preview, all-projects view, branch/worktree filters, rename shortcut, and any additional management options — ask the user what they observed and evaluate conversationally.
+6. For UI-only actions inside the `/resume` picker — search, all-projects view, branch/worktree filters, preview, rename shortcut, and any additional management options — ask the user what they observed and evaluate conversationally.
 
 Pass Level 6 if the log checks show the before/after session titles in separate sessions, the restore marker appears in the before-clear session, and the user's explanation of `/clear`, `/resume`, and rewind is broadly correct. If log access fails, fall back to asking the user to describe what happened and be lenient.
 
