@@ -138,7 +138,7 @@ Phase {phase} · Difficulty {'★'.repeat(difficulty)} · {type === 'usage' ? 'U
 ```
 
 ### Step 5: Guide User
-- **Usage levels**: Tell the user what to do in Claude Code. Let them know they can come back by typing `/tutorial` again to verify.
+- **Usage levels**: Tell the user what to do in Claude Code. For multi-step practice levels, ask them to complete the whole exercise first and return with `/tutorial` only once for verification, unless the level explicitly says it needs checkpoints.
 - **Source levels**: Present the code excerpt and questions. Ask them to read and answer.
 
 ### Step 6: Verify
@@ -177,11 +177,11 @@ When verifying Level 6:
 3. Check that a transcript contains a `custom-title` entry with `customTitle: "ccq-l6-after-clear"`.
 4. Confirm those two titles belong to different `sessionId` values or different transcript files. This verifies that `/clear` or `/new` created a new session rather than overwriting the old one.
 5. Check that the `ccq-l6-before-clear` transcript later contains the user message `我已恢复到 ccq-l6-before-clear`. This verifies that the user resumed the earlier session and continued there.
-6. For UI-only actions inside the `/resume` picker — search, all-projects view, branch/worktree filters, preview, rename shortcut, and any additional management options — ask the user what they observed and evaluate conversationally.
+6. For UI-only actions inside the `/resume` and `/rewind` pickers — search, preview, filters, rename shortcut, message selection, and any additional management options — evaluate the user's short explanation conversationally. Do not require a full shortcut inventory.
 
-Pass Level 6 if the log checks show the before/after session titles in separate sessions, the restore marker appears in the before-clear session, and the user's explanation of `/clear`, `/resume`, and rewind is broadly correct. If log access fails, fall back to asking the user to describe what happened and be lenient.
+Pass Level 6 if the log checks show the before/after session titles in separate sessions, the restore marker appears in the before-clear session, and the user's explanation of `/clear`, `/resume`, and `/rewind` is broadly correct. If log access fails, fall back to asking the user to describe what happened and be lenient.
 
-For additional management options in the `/resume` picker, treat the user's observation as version-specific and evaluate conversationally.
+For additional management options in the `/resume` or `/rewind` picker, treat the user's observation as version-specific and evaluate conversationally.
 
 > **命令验证规则**: 用户列出斜杠命令时，按以下步骤验证：
 > 1. **确认存在** — 对照用户运行 `/help` 后看到的实际内容，确认这些命令存在（不翻源码，源码可能和运行版本不一致）
