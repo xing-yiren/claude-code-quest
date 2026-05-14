@@ -146,6 +146,7 @@ Phase {phase} · Difficulty {'★'.repeat(difficulty)} · {type === 'usage' ? 'U
 ### Step 5: Guide User
 - **Usage levels**: Tell the user what to do in Claude Code. For multi-step practice levels, ask them to complete the whole exercise first and return with `/tutorial` only once for verification, unless the level explicitly says it needs checkpoints.
 - **Source levels**: Present the code excerpt and questions. Ask them to read and answer.
+- **Progressive optional sections**: If a level contains sections named `## 进阶教程`, `## 可选进阶`, or marked `按步骤披露`, do **not** show that full section during the initial level display. Show only the main lesson and, if relevant, a short note that an optional advanced section exists after passing the base task.
 
 > **提问后必须停住等回答**：当一关有验证问题（例如 "Plan Mode 和普通模式有什么不同？"、"你看到了哪些技能？"），把问题抛出后**必须结束当前回合**，等用户回答。**不要在同一条消息里把答案写出来** —— 那等于绕过了验证。
 >
@@ -158,7 +159,8 @@ Phase {phase} · Difficulty {'★'.repeat(difficulty)} · {type === 'usage' ? 'U
 - **Source levels**: Compare the user's answers against the expected concepts. If they match reasonably, mark as passed. Be lenient — the goal is learning, not exact wording.
 
 ### Step 7: Advance or Retry
-- **Passed**: Update progress.json (increment currentLevel, add to completedLevels). Congratulate the user briefly, then output a **「📌 本关收获」** recap (see format below), then ask 是否继续下一关 — 如果用户说"继续"/"好"/"next"等，直接加载下一关内容，**不需要用户再输入 `/tutorial`**。
+- **Passed**: Update progress.json (increment currentLevel, add to completedLevels). Congratulate the user briefly, then output a **「📌 本关收获」** recap (see format below). If the level has a `## 进阶入口` section, ask whether the user wants to enter that optional advanced tutorial before asking whether to continue to the next level. Otherwise, ask 是否继续下一关 — 如果用户说"继续"/"好"/"next"等，直接加载下一关内容，**不需要用户再输入 `/tutorial`**。
+- **Advanced accepted**: If the user says they want the optional advanced tutorial, reveal only the first checkpoint from the `## 进阶教程` section, then stop and wait. After each checkpoint, ask whether to continue to the next checkpoint, skip the rest, or move to the next level. Advanced checkpoints do not affect `completedLevels`; the base level remains the pass condition.
 - **Failed**: Explain what's missing. Offer the hint. Let them try again.
 
 > **每关通关都要给「📌 本关收获」小结**：用户答完验证问题、判过关之后，必须输出一段固定格式的小结：
