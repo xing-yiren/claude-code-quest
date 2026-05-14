@@ -137,17 +137,42 @@ Phase {phase} · Difficulty {'★'.repeat(difficulty)} · {type === 'usage' ? 'U
 {description/goal}
 ```
 
+> **任务原文照搬原则**：渲染关卡时，任务步骤、命令名（如 `/skills`、`/plan`）、文件名、关键短语必须**严格 1:1 引用 level 文件**，不要换词重写或自由发挥。允许加一句开场白说明这关学什么，但「任务」「验证」「提示」三节的内容是 level 文件的复述，不是 paraphrase。
+>
+> **为什么**：用户重新进入同一关时，看到的内容必须前后一致 —— level 文件是单一事实来源，任何二次创作都会让教程感觉漂移。
+>
+> **如果想补充背景**（例如推荐某些内置技能让用户试）：单独开一个标了「补充」或「推荐」的小节，不要混进任务正文。
+
 ### Step 5: Guide User
 - **Usage levels**: Tell the user what to do in Claude Code. For multi-step practice levels, ask them to complete the whole exercise first and return with `/tutorial` only once for verification, unless the level explicitly says it needs checkpoints.
 - **Source levels**: Present the code excerpt and questions. Ask them to read and answer.
+
+> **提问后必须停住等回答**：当一关有验证问题（例如 "Plan Mode 和普通模式有什么不同？"、"你看到了哪些技能？"），把问题抛出后**必须结束当前回合**，等用户回答。**不要在同一条消息里把答案写出来** —— 那等于绕过了验证。
+>
+> **为什么**：自问自答会让验证失去意义，用户没机会真正思考，教程退化成一长串说明文。
+>
+> **唯一例外**：用户明确说"我不会" / "直接告诉我答案" / "跳过解释" 时，可以直接给答案。
 
 ### Step 6: Verify
 - **Usage levels**: Use tools (Glob, Read, Bash) to check if the task was completed. For actions that don't leave traces, ask the user what they learned and evaluate.
 - **Source levels**: Compare the user's answers against the expected concepts. If they match reasonably, mark as passed. Be lenient — the goal is learning, not exact wording.
 
 ### Step 7: Advance or Retry
-- **Passed**: Update progress.json (increment currentLevel, add to completedLevels). Congratulate the user. **直接问是否要继续下一关** — 如果用户说"继续"/"好"/"next"等，直接加载下一关内容，**不需要用户再输入 `/tutorial`**。
+- **Passed**: Update progress.json (increment currentLevel, add to completedLevels). Congratulate the user briefly, then output a **「📌 本关收获」** recap (see format below), then ask 是否继续下一关 — 如果用户说"继续"/"好"/"next"等，直接加载下一关内容，**不需要用户再输入 `/tutorial`**。
 - **Failed**: Explain what's missing. Offer the hint. Let them try again.
+
+> **每关通关都要给「📌 本关收获」小结**：用户答完验证问题、判过关之后，必须输出一段固定格式的小结：
+>
+> ```text
+> 📌 本关收获
+> - 核心知识点 1（一句话，<25 字）
+> - 核心知识点 2
+> - 核心知识点 3（最多 3 条，最少 2 条）
+> ```
+>
+> **为什么**：用户提到 Level 7、8 有这种小结很有用，希望全程都有 —— 收获列表把刚学的概念锚定下来，比单纯"恭喜通过"留下的印象深得多。
+>
+> **格式要求**：标题就用字面量「📌 本关收获」（这是用户明确要求保留的 emoji，是本教程的少数 emoji 例外）；要点 2–3 条；每条 ≤25 字；只列**本关学到的新东西**，不要泛泛说"加油"或重复任务描述。
 
 > **闯关模式原则**: `/tutorial` 用于进入或继续闯关模式，`/tutorial exit` 用于退出闯关模式并保存进度。连续通关时可以直接用对话推进（"继续吗？" → "好" → 加载下一关），不需要用户每关都重新输入 `/tutorial`。
 
@@ -165,6 +190,17 @@ Phase {phase} · Difficulty {'★'.repeat(difficulty)} · {type === 'usage' ? 'U
 | `/init` was run | `Glob("CLAUDE.md")` + `Read` to check content |
 | Skill was invoked | `Glob(".claude/skills/hello-skill/SKILL.md")` |
 | No trace action (`/help`, `/clear`, `/model`) | Ask the user what they saw/learned, evaluate conversationally |
+
+### Level 7 CLAUDE.md Verification
+
+Level 7 has two requirements:
+
+1. Check that `CLAUDE.md` exists and is non-empty. This only verifies that `/init` produced or updated the file.
+2. Require the user to explain, in their own words, both:
+   - the main sections or kinds of guidance in `CLAUDE.md`
+   - how it helps day-to-day Claude Code usage
+
+Do not pass Level 7 based only on the file check. If `CLAUDE.md` exists but the user has not answered yet, prompt them to read it and answer the two questions.
 
 ### Level 6 Session Management Verification
 
