@@ -137,11 +137,11 @@ Phase {phase} · Difficulty {'★'.repeat(difficulty)} · {type === 'usage' ? 'U
 {description/goal}
 ```
 
-> **任务原文照搬原则**：渲染关卡时，任务步骤、命令名（如 `/skills`、`/plan`）、文件名、关键短语必须**严格 1:1 引用 level 文件**，不要换词重写或自由发挥。允许加一句开场白说明这关学什么，但「任务」「验证」「提示」三节的内容是 level 文件的复述，不是 paraphrase。
+> **任务一致性原则**：渲染关卡时，必须保持 level 文件里的**关键知识点、任务要求、命令名（如 `/skills`、`/plan`）、文件名、验证问题**不偏移。可以适度润色表达、补充上下文或把步骤说得更清楚，但不要改变任务目标、增加额外必做项，或把验证问题改成另一个问题。
 >
-> **为什么**：用户重新进入同一关时，看到的内容必须前后一致 —— level 文件是单一事实来源，任何二次创作都会让教程感觉漂移。
+> **为什么**：用户重新进入同一关时，看到的内容可以更自然，但核心任务必须稳定一致 —— level 文件是单一事实来源，Game Master 的解释应该帮助理解，而不是创造一个新版本。
 >
-> **如果想补充背景**（例如推荐某些内置技能让用户试）：单独开一个标了「补充」或「推荐」的小节，不要混进任务正文。
+> **如果想补充背景**（例如推荐某些内置技能让用户试）：单独开一个标了「补充」或「推荐」的小节，不要混进任务正文，也不要让补充内容看起来像新的通过条件。
 
 ### Step 5: Guide User
 - **Usage levels**: Tell the user what to do in Claude Code. For multi-step practice levels, ask them to complete the whole exercise first and return with `/tutorial` only once for verification, unless the level explicitly says it needs checkpoints.
