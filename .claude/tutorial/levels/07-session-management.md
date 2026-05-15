@@ -1,5 +1,5 @@
 ---
-id: 6
+id: 7
 title: 会话管理：标记、查看、新建、回退与恢复
 phase: 1
 difficulty: 2

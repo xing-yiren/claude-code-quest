@@ -1,5 +1,5 @@
 ---
-description: "Interactive tutorial game for learning Claude Code — from basic usage to source architecture. 24 levels across 3 phases + 1 bonus."
+description: "Interactive tutorial game for learning Claude Code — from basic usage to source architecture. 25 levels across 3 phases + 1 bonus."
 allowed-tools: [Read, Write, Glob, Bash, Grep]
 user-invocable: true
 arguments: subcommand target
@@ -106,7 +106,7 @@ Check if the user passed any arguments. Treat `/tutorial` as a small CLI with th
 - `/tutorial list` → No extra arguments. Read all level files (or use Glob to list them), then display a grouped progress list instead of a generic table. Show statuses as `[DONE]`, `[CURRENT]`, `[TODO]`, group by phase, and include the user's current level and completed count at the top.
   Example format:
   ```text
-  Progress: 5/24 completed · Current: Level 5
+  Progress: 5/25 completed · Current: Level 5
 
   Phase 1 — Basics
   [DONE]    01 欢迎与基本交互
@@ -130,7 +130,7 @@ Recommended format:
 
 ```text
 Claude Code Quest
-Level {n}/24 · {completedLevels.length} completed
+Level {n}/25 · {completedLevels.length} completed
 {title}
 Phase {phase} · Difficulty {'★'.repeat(difficulty)} · {type === 'usage' ? 'Usage' : 'Source'}
 
@@ -203,22 +203,22 @@ After the header, separate the render into two clearly labeled blocks:
 | Skill was invoked | `Glob(".claude/skills/hello-skill/SKILL.md")` |
 | No trace action (`/help`, `/clear`, `/model`) | Ask the user what they saw/learned, evaluate conversationally |
 
-### Level 7 CLAUDE.md Verification
+### Level 8 CLAUDE.md Verification
 
-Level 7 has two requirements:
+Level 8 has two requirements:
 
 1. Check that `CLAUDE.md` exists and is non-empty. This only verifies that `/init` produced or updated the file.
 2. Require the user to explain, in their own words, both:
    - the main sections or kinds of guidance in `CLAUDE.md`
    - how it helps day-to-day Claude Code usage
 
-Do not pass Level 7 based only on the file check. If `CLAUDE.md` exists but the user has not answered yet, prompt them to read it and answer the two questions.
+Do not pass Level 8 based only on the file check. If `CLAUDE.md` exists but the user has not answered yet, prompt them to read it and answer the two questions.
 
-### Level 6 Session Management Verification
+### Level 7 Session Management Verification
 
-Level 6 uses fixed session titles so some steps can be verified from Claude Code's local transcript logs.
+Level 7 uses fixed session titles so some steps can be verified from Claude Code's local transcript logs.
 
-When verifying Level 6:
+When verifying Level 7:
 
 1. Use `Bash` or `Glob`/`Read` to inspect Claude Code session logs under the user's Claude config `projects` directory. Session transcripts are `.jsonl` files.
 2. Check that a transcript contains a `custom-title` entry with `customTitle: "ccq-l6-before-clear"`.
@@ -227,7 +227,7 @@ When verifying Level 6:
 5. Check that the `ccq-l6-before-clear` transcript later contains the user message `我已恢复到 ccq-l6-before-clear`. This verifies that the user resumed the earlier session and continued there.
 6. For UI-only actions inside the `/resume` and `/rewind` pickers — search, preview, filters, rename shortcut, message selection, and any additional management options — evaluate the user's short explanation conversationally. Do not require a full shortcut inventory.
 
-Pass Level 6 if the log checks show the before/after session titles in separate sessions, the restore marker appears in the before-clear session, and the user's explanation of `/clear`, `/resume`, and `/rewind` is broadly correct. If log access fails, fall back to asking the user to describe what happened and be lenient.
+Pass Level 7 if the log checks show the before/after session titles in separate sessions, the restore marker appears in the before-clear session, and the user's explanation of `/clear`, `/resume`, and `/rewind` is broadly correct. If log access fails, fall back to asking the user to describe what happened and be lenient.
 
 For additional management options in the `/resume` or `/rewind` picker, treat the user's observation as version-specific and evaluate conversationally.
 

@@ -9,7 +9,7 @@ This is a **Claude Code file skill**. No plugins, no modifications, no extra ins
 ```text
 User: /tutorial list
 Claude:
-Progress: 5/24 completed · Current: Level 5
+Progress: 5/25 completed · Current: Level 5
 
 Phase 1 — Basics
 [DONE]    01 欢迎与基本交互
@@ -18,14 +18,14 @@ Phase 1 — Basics
 [TODO]    06 会话恢复与回退
 ```
 
-## 24 Levels, 3 Phases + 1 Bonus
+## 25 Levels, 3 Phases + 1 Bonus
 
 | Phase | Levels | Topic |
 |-------|--------|-------|
-| 1 — Basics | 1–13 | Learn Claude Code usage: slash commands, file ops, model switching, custom model, session recovery, CLAUDE.md, skills, plan mode, MCP, subagents, agent teams, context management |
-| 2 — Architecture | 14–18 | Understand the design: QueryEngine, tool system, coordinator-worker, context compression, skills system |
-| 3 — Deep Dive | 19–23 | Master the internals: security model, memory system, task system, terminal UI, build-your-skill |
-| Bonus | 24 | cc-switch multi-config management |
+| 1 — Basics | 1–14 | Learn Claude Code usage: slash commands, file ops, Git workflow, model switching, custom model, session recovery, CLAUDE.md, skills, plan mode, MCP, subagents, agent teams, context management |
+| 2 — Architecture | 15–19 | Understand the design: QueryEngine, tool system, coordinator-worker, context compression, skills system |
+| 3 — Deep Dive | 20–24 | Master the internals: security model, memory system, task system, terminal UI, build-your-skill |
+| Bonus | 25 | cc-switch multi-config management |
 
 ## Tutorial Commands
 

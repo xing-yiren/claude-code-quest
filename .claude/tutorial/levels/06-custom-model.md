@@ -1,5 +1,5 @@
 ---
-id: 5
+id: 6
 title: 自定义模型配置
 phase: 1
 difficulty: 2
