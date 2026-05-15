@@ -137,11 +137,21 @@ Phase {phase} · Difficulty {'★'.repeat(difficulty)} · {type === 'usage' ? 'U
 {description/goal}
 ```
 
+After the header, separate the render into two clearly labeled blocks:
+
+1. **关卡内容**
+   - Contains the level file's actual required goal, task, verification question, and hint.
+   - This is the source of truth for what the user must do to pass.
+
+2. **补充说明**
+   - Contains adaptive explanation, recommendations, examples, warnings, or contextual guidance inferred by the Game Master.
+   - This block is optional help only. It must never add new required pass conditions.
+
 > **任务一致性原则**：渲染关卡时，必须保持 level 文件里的**关键知识点、任务要求、命令名（如 `/skills`、`/plan`）、文件名、验证问题**不偏移。可以适度润色表达、补充上下文或把步骤说得更清楚，但不要改变任务目标、增加额外必做项，或把验证问题改成另一个问题。
 >
 > **为什么**：用户重新进入同一关时，看到的内容可以更自然，但核心任务必须稳定一致 —— level 文件是单一事实来源，Game Master 的解释应该帮助理解，而不是创造一个新版本。
 >
-> **如果想补充背景**（例如推荐某些内置技能让用户试）：单独开一个标了「补充」或「推荐」的小节，不要混进任务正文，也不要让补充内容看起来像新的通过条件。
+> **如果想补充背景**（例如推荐某些内置技能让用户试）：放进「补充说明」块，不要混进关卡内容，也不要让补充内容看起来像新的通过条件。
 
 ### Step 5: Guide User
 - **Usage levels**: Tell the user what to do in Claude Code. For multi-step practice levels, ask them to complete the whole exercise first and return with `/tutorial` only once for verification, unless the level explicitly says it needs checkpoints.

@@ -12,40 +12,51 @@ type: usage
 
 ## 任务
 
-现在你已经了解了技能系统的工作原理（第 15 关），是时候亲手创建一个了！
+现在你已经了解了技能系统的工作原理（第 18 关），是时候亲手创建一个更接近真实工作流的 Skill 了！
 
-1. 在 `.claude/skills/` 目录下创建一个名为 `hello-quest` 的文件夹
+1. 在 `.claude/skills/` 目录下创建一个名为 `docs-review` 的文件夹
 2. 在里面创建 `SKILL.md` 文件，内容如下：
    ```markdown
    ---
-   description: "一个友好的问候技能"
+   description: "Review Markdown docs for clarity, structure, and missing next steps"
+   allowed-tools: [Read, Glob, Grep]
    ---
 
-   你是一个友好的助手。用户说什么，你就用中文回复 "你好！" + 用户说的话。
-   如果用户说 "完成"，就回复 "太棒了！" 然后结束。
+   你是一个文档审查助手。请审查用户指定的 Markdown 文件或目录。
+
+   重点检查：
+   1. 标题结构是否清晰
+   2. 是否有 TODO、占位内容或过期说明
+   3. 是否缺少安装、使用、验证或下一步说明
+   4. 是否有可以简化的长段落
+
+   输出格式：
+   - 先给 3 条以内总体结论
+   - 再列出具体文件和建议
+   - 不要直接修改文件，除非用户明确要求
    ```
-3. 输入 `/hello-quest` 测试你的技能
-4. 和你的技能聊几句，确保它正常工作
-5. 完成后告诉我
+3. 输入 `/docs-review` 测试你的技能
+4. 让它审查一个 Markdown 文件或目录，例如：
+   - `请审查 README.md`
+   - `请审查 .claude/tutorial/levels/`
+5. 完成后告诉我这个 Skill 做了什么、为什么它比一次性 prompt 更适合复用
 
 **额外挑战（可选）**：
-给你的技能添加 `allowedTools` 配置，允许它使用 Read 和 Glob 工具。修改 SKILL.md 的 frontmatter：
-
-```markdown
----
-description: "一个友好的问候技能，也能查看文件"
-allowedTools: [Read, Glob]
----
-```
+把这个 skill 改成只在用户明确要求时才编辑文件，并在 prompt 里写清楚“先审查，后询问是否修改”。
 
 ## 验证
 
-我会检查 `.claude/skills/hello-quest/SKILL.md` 是否存在且内容正确。
+我会检查：
+
+1. `.claude/skills/docs-review/SKILL.md` 是否存在
+2. frontmatter 和 prompt 是否包含文档审查目标
+3. 你是否能说明这个 Skill 的复用价值，以及它和一次性 prompt 的区别
 
 ## 提示
 
 - 文件技能放在 `.claude/skills/<技能名>/SKILL.md`
 - 修改 SKILL.md 后 Claude Code 会自动热重载（几秒内）
 - YAML frontmatter 中 `description` 是必填项
-- 技能 prompt 会注入到模型上下文中，写清楚角色和行为
-- 完成这个关卡后，你就是一个正式的 Claude Code 技能开发者了！
+- 真实有价值的 skill 往往围绕“重复出现的工作流”设计，而不是一次性的玩具对话
+- 如果一个 prompt 你会反复使用 5 次以上，它就值得做成 skill
+- 完成这个关卡后，你就能开始为自己或团队封装可复用工作流了！
