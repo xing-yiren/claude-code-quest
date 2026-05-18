@@ -10,6 +10,17 @@ This log tracks tutorial development decisions, pushed changes, and remaining wo
 
 ## Pushed changes
 
+### 2026-05-15 — Project context migration
+
+Commit: pending
+
+- Added project-level `CLAUDE.md` so future Claude Code sessions launched from this repository inherit the working context.
+- Documented tutorial structure, level design principles, progressive disclosure rules, Git workflow, and maintenance checklist.
+- Pointed future work at `DEVELOPMENT_LOGBOOK.md` as the project todo source.
+
+Why:
+- Most development happened from a different working directory, so new sessions launched in this repo needed a durable project context handoff.
+
 ### 2026-05-15 — Progressive long-task presentation
 
 Commit: `75d25de Make long tutorial tasks progressive`
@@ -124,7 +135,7 @@ Why:
 - [x] Update README for 25 levels. Completed in `233abbe`.
 - [x] Keep this development logbook. Started in this entry.
 - [ ] Keep README and `.claude/skills/tutorial/SKILL.md` in sync whenever level count or command behavior changes.
-- [ ] Add a short contributor note explaining how to update this logbook and check off todos.
+- [x] Add a short contributor note explaining how to update this logbook and check off todos. Completed in pending context-migration commit.
 
 ## Open questions
 
