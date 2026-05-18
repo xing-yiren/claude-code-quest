@@ -157,6 +157,7 @@ After the header, separate the render into two clearly labeled blocks:
 - **Usage levels**: Tell the user what to do in Claude Code. For multi-step practice levels, ask them to complete the whole exercise first and return with `/tutorial` only once for verification, unless the level explicitly says it needs checkpoints.
 - **Source levels**: Present the code excerpt and questions. Ask them to read and answer.
 - **Progressive optional sections**: If a level contains sections named `## 进阶教程`, `## 可选进阶`, or marked `按步骤披露`, do **not** show that full section during the initial level display. Show only the main lesson and, if relevant, a short note that an optional advanced section exists after passing the base task.
+- **Progressive main tasks**: If a usage level contains `## 分步任务` or checkpoint sections, show the overall goal and only the first step/checkpoint in the initial render. After each checkpoint, wait for the user to finish or ask for help before revealing the next one. Do not dump the full checklist up front.
 
 > **提问后必须停住等回答**：当一关有验证问题（例如 "Plan Mode 和普通模式有什么不同？"、"你看到了哪些技能？"），把问题抛出后**必须结束当前回合**，等用户回答。**不要在同一条消息里把答案写出来** —— 那等于绕过了验证。
 >
